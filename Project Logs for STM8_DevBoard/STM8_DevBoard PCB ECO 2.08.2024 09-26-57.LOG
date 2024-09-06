@@ -1,0 +1,13 @@
+Added Component: Designator=C1(1206_Capacitor)
+Added Component: Designator=R1(1206 Resistor)
+Added Component: Designator=R2(1206 Resistor)
+Added Pin To Net: NetName=NetC1_1 Pin=C1-1
+Added Pin To Net: NetName=GND Pin=C1-2
+Added Pin To Net: NetName=NetD2_1 Pin=R1-1
+Added Pin To Net: NetName=NetD2_1 Pin=R1-1
+Added Pin To Net: NetName=NetD3_1 Pin=R2-1
+Added Pin To Net: NetName=NetD3_1 Pin=R2-1
+Added Net: Name=NetD3_1
+Added Member To Class: ClassName=STM8_DevBoard Member=Component C1 1uF
+Added Member To Class: ClassName=STM8_DevBoard Member=Component R1 1K
+Added Member To Class: ClassName=STM8_DevBoard Member=Component R2 1K

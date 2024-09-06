@@ -1,0 +1,11 @@
+Added Component: Designator=J1(TE_1981568-1)
+Added Pin To Net: NetName=VCC Pin=J1-1
+Added Pin To Net: NetName=GND Pin=J1-5
+Added Pin To Net: NetName=GND Pin=J1-SH1
+Added Pin To Net: NetName=GND Pin=J1-SH2
+Added Pin To Net: NetName=GND Pin=J1-SH3
+Added Pin To Net: NetName=GND Pin=J1-SH4
+Added Pin To Net: NetName=GND Pin=J1-SH5
+Added Pin To Net: NetName=GND Pin=J1-SH6
+Added Member To Class: ClassName=STM8_DevBoard Member=Component J1 1981568-1
+Added Room: Name=STM8_DevBoard

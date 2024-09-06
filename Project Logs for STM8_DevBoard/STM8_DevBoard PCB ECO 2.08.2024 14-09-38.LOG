@@ -1,0 +1,119 @@
+Added Component: Designator=B1(NRST)
+Added Component: Designator=C1(1206_Capacitor)
+Added Component: Designator=C2(1206_Capacitor)
+Added Component: Designator=C3(1206_Capacitor)
+Added Component: Designator=C4(1206_Capacitor)
+Added Component: Designator=C5(1206_Capacitor)
+Added Component: Designator=C6(1206_Capacitor)
+Added Component: Designator=C7(1206_Capacitor)
+Added Component: Designator=J1(TE_1981568-1)
+Added Component: Designator=L2(0805_LED)
+Added Component: Designator=L3(0805_LED)
+Added Component: Designator=P1(Header 10)
+Added Component: Designator=P2(Header 10)
+Added Component: Designator=P3(Header 4)
+Added Component: Designator=R1(1206 Resistor)
+Added Component: Designator=R2(1206 Resistor)
+Added Component: Designator=R3(1206 Resistor)
+Added Component: Designator=U1(SOP65P640X120-20N)
+Added Component: Designator=U2(SOT229P700X180-4N)
+Added Pin To Net: NetName=NRST Pin=B1-1
+Added Pin To Net: NetName=GND Pin=B1-2
+Added Pin To Net: NetName=GND Pin=C1-1
+Added Pin To Net: NetName=VCC Pin=C1-2
+Added Pin To Net: NetName=GND Pin=C2-1
+Added Pin To Net: NetName=VCC Pin=C2-2
+Added Pin To Net: NetName=GND Pin=C3-1
+Added Pin To Net: NetName=3V3 Pin=C3-2
+Added Pin To Net: NetName=3V3 Pin=C4-1
+Added Pin To Net: NetName=GND Pin=C4-2
+Added Pin To Net: NetName=GND Pin=C5-1
+Added Pin To Net: NetName=3V3 Pin=C5-2
+Added Pin To Net: NetName=NetC6_1 Pin=C6-1
+Added Pin To Net: NetName=GND Pin=C6-2
+Added Pin To Net: NetName=GND Pin=C7-1
+Added Pin To Net: NetName=NetC7_2 Pin=C7-2
+Added Pin To Net: NetName=VCC Pin=J1-1
+Added Pin To Net: NetName=GND Pin=J1-5
+Added Pin To Net: NetName=GND Pin=J1-SH1
+Added Pin To Net: NetName=GND Pin=J1-SH2
+Added Pin To Net: NetName=GND Pin=J1-SH3
+Added Pin To Net: NetName=GND Pin=J1-SH4
+Added Pin To Net: NetName=GND Pin=J1-SH5
+Added Pin To Net: NetName=GND Pin=J1-SH6
+Added Pin To Net: NetName=NetL2_L_1 Pin=L2-L_1
+Added Pin To Net: NetName=GND Pin=L2-L_2
+Added Pin To Net: NetName=NetL3_L_1 Pin=L3-L_1
+Added Pin To Net: NetName=PB5 Pin=L3-L_2
+Added Pin To Net: NetName=PA3 Pin=P1-1
+Added Pin To Net: NetName=VDD Pin=P1-2
+Added Pin To Net: NetName=VCAP Pin=P1-3
+Added Pin To Net: NetName=GND Pin=P1-4
+Added Pin To Net: NetName=PA2 Pin=P1-5
+Added Pin To Net: NetName=PA1 Pin=P1-6
+Added Pin To Net: NetName=NRST Pin=P1-7
+Added Pin To Net: NetName=PD6 Pin=P1-8
+Added Pin To Net: NetName=PD5 Pin=P1-9
+Added Pin To Net: NetName=PB5 Pin=P2-1
+Added Pin To Net: NetName=PB4 Pin=P2-2
+Added Pin To Net: NetName=PC3 Pin=P2-3
+Added Pin To Net: NetName=PC4 Pin=P2-4
+Added Pin To Net: NetName=PC5 Pin=P2-5
+Added Pin To Net: NetName=PC6 Pin=P2-6
+Added Pin To Net: NetName=PC7 Pin=P2-7
+Added Pin To Net: NetName=PD1 Pin=P2-8
+Added Pin To Net: NetName=PD2 Pin=P2-9
+Added Pin To Net: NetName=PD3 Pin=P2-10
+Added Pin To Net: NetName=3V3 Pin=P3-1
+Added Pin To Net: NetName=PD1 Pin=P3-2
+Added Pin To Net: NetName=NRST Pin=P3-4
+Added Pin To Net: NetName=NetL2_L_1 Pin=R1-1
+Added Pin To Net: NetName=3V3 Pin=R1-2
+Added Pin To Net: NetName=NetL3_L_1 Pin=R2-1
+Added Pin To Net: NetName=3V3 Pin=R2-2
+Added Pin To Net: NetName=NetC7_2 Pin=R3-1
+Added Pin To Net: NetName=3V3 Pin=R3-2
+Added Pin To Net: NetName=PD5 Pin=U1-2
+Added Pin To Net: NetName=PD6 Pin=U1-3
+Added Pin To Net: NetName=NRST Pin=U1-4
+Added Pin To Net: NetName=PA1 Pin=U1-5
+Added Pin To Net: NetName=PA2 Pin=U1-6
+Added Pin To Net: NetName=GND Pin=U1-7
+Added Pin To Net: NetName=NetC6_1 Pin=U1-8
+Added Pin To Net: NetName=3V3 Pin=U1-9
+Added Pin To Net: NetName=PA3 Pin=U1-10
+Added Pin To Net: NetName=PB5 Pin=U1-11
+Added Pin To Net: NetName=PB4 Pin=U1-12
+Added Pin To Net: NetName=PC3 Pin=U1-13
+Added Pin To Net: NetName=PC4 Pin=U1-14
+Added Pin To Net: NetName=PC5 Pin=U1-15
+Added Pin To Net: NetName=PC6 Pin=U1-16
+Added Pin To Net: NetName=PC7 Pin=U1-17
+Added Pin To Net: NetName=PD1 Pin=U1-18
+Added Pin To Net: NetName=PD2 Pin=U1-19
+Added Pin To Net: NetName=PD3 Pin=U1-20
+Added Pin To Net: NetName=GND Pin=U2-1
+Added Pin To Net: NetName=3V3 Pin=U2-2
+Added Pin To Net: NetName=VCC Pin=U2-3
+Added Pin To Net: NetName=PD4 Pin=P1-10
+Added Pin To Net: NetName=PD4 Pin=U1-1
+Added Net: Name=PD4
+Added Member To Class: ClassName=STM8_DevBoard Member=Component B1 Push Button
+Added Member To Class: ClassName=STM8_DevBoard Member=Component C1 1206_Capacitor
+Added Member To Class: ClassName=STM8_DevBoard Member=Component C2 1206_Capacitor
+Added Member To Class: ClassName=STM8_DevBoard Member=Component C3 1206_Capacitor
+Added Member To Class: ClassName=STM8_DevBoard Member=Component C4 1206_Capacitor
+Added Member To Class: ClassName=STM8_DevBoard Member=Component C5 1206_Capacitor
+Added Member To Class: ClassName=STM8_DevBoard Member=Component C6 1206_Capacitor
+Added Member To Class: ClassName=STM8_DevBoard Member=Component C7 1206_Capacitor
+Added Member To Class: ClassName=STM8_DevBoard Member=Component J1 1981568-1
+Added Member To Class: ClassName=STM8_DevBoard Member=Component L2 0805_LED
+Added Member To Class: ClassName=STM8_DevBoard Member=Component L3 0805_LED
+Added Member To Class: ClassName=STM8_DevBoard Member=Component P1 Header 10
+Added Member To Class: ClassName=STM8_DevBoard Member=Component P2 Header 10
+Added Member To Class: ClassName=STM8_DevBoard Member=Component P3 Header 4
+Added Member To Class: ClassName=STM8_DevBoard Member=Component R1 1206 Resistor
+Added Member To Class: ClassName=STM8_DevBoard Member=Component R2 1206 Resistor
+Added Member To Class: ClassName=STM8_DevBoard Member=Component R3 1206 Resistor
+Added Member To Class: ClassName=STM8_DevBoard Member=Component U1 STM8S003F3P6TR
+Added Member To Class: ClassName=STM8_DevBoard Member=Component U2 AMS1117-3.3

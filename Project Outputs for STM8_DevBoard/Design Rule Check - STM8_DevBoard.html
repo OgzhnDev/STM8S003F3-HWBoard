@@ -1,0 +1,599 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<style type="text/css">
+		h1, h2, h3, h4, h5, h6 {
+			font-family : sans-serif;
+			color : white;
+			background-color : #21489e;
+			padding: 0.3em;
+		}
+		body {
+			font-family : verdana;
+		}
+		td, th {
+			padding: 0.5em;
+			text-align : center;
+			width : 18%;
+		}
+		th {
+			background-color : #A6CAF0;
+
+		}
+		th.column1, td.column1 {
+			text-align: left;
+			width : auto;
+		}
+		table {
+			width : 100%;
+		}
+		
+		.DRC_summary_header {							
+			padding-bottom : 0.1em;
+			border : 0px solid black;							
+			width: 100%;
+                        align: right;
+                        
+		}
+
+		.DRC_summary_header_col1, 
+		.DRC_summary_header_col2, 
+		.DRC_summary_header_col3
+		{
+			color : black;
+			font-size:150%;
+                        padding : 0em;
+			padding-top : 0.2em;
+			padding-bottom 0.2: 0em;
+			border : 0px solid black;
+			width : auto;
+			vertical-align: top;
+			font-weight: bold;				
+		}
+		
+		.DRC_summary_header_col1 	
+		{		                       
+			text-align: right;
+                        width: auto;	
+		}
+
+		.DRC_summary_header_col2 	
+		{		
+			text-align: center;	
+		}
+
+		.DRC_summary_header_col3 	
+		{		
+			text-align: left;	
+		}
+
+
+		
+		.header_holder
+		{
+		Width = 100%;
+		border = 0px solid green;
+		padding = 0;
+		}
+		
+		
+		
+		.front_matter, .front_matter_column1, .front_matter_column2, .front_matter_column3
+                {
+			left:0;
+			top:0;
+			padding-top : 0.1em;			
+			border : 0px solid black;
+			width : 100%;
+			vertical-align: top
+
+		}
+		.front_matter {	
+			
+			margin-top: 5px;
+ 			margin-left: 0px;					 			
+ 			horizontal-align: left;
+		}
+				
+		
+		.front_matter_column1 {
+			width : 10em;	
+			text-align  : right;
+			padding-right:0.1em;
+			
+		}
+		
+		.front_matter_column2 {
+                        width: 0.1em;
+			align: center;
+			text-align : center;
+			margin-right  : 0.1em;	
+			margin-left   : 0.1em;
+		}
+		.front_matter_column3 {
+			width         : auto;  
+			text-align    : left;	
+			margin-right  : 0.5em;				
+		}
+		
+		.total_column1, .total_column {
+			font-weight : bold;
+		}
+		.total_column1 {
+			text-align : right;
+		}
+		.warning, .error {
+			color : red;
+			font-weight : bold;
+		}
+		tr.onmouseout_odd {
+			background-color : #EEEEE0 
+		}
+		tr.onmouseout_even { 
+			background-color : #F3F3E3   
+		}
+		tr.onmouseover_odd, tr.onmouseover_even { 
+			background-color : lightYellow
+		} 
+		a:link, a:visited, .q a:link,.q a:active,.q {
+			color: #21489e; 
+		}
+		a:link.callback, a:visited.callback { 
+			color: #008000 
+		}
+		a:link.customize, a:visited.customize {
+			color: #C0C0C0;
+			position: absolute; 
+			right: 10px;
+		}	
+		p.contents_level1 {
+			font-weight : bold;
+			font-size : 110%;
+			margin : 0.5em;
+		}
+		p.contents_level2 {
+			position : relative;
+			left : 20px;
+			margin : 0.5em;
+		}
+	</style><script type="text/javascript">
+		function coordToMils(coord) {
+			var number = coord / 10000;
+			
+			if (number != number.toFixed(3))
+				number = number.toFixed(3);
+
+			return number + 'mil'
+		}
+
+		function coordToMM(coord) {
+			var number = 0.0254 * coord / 10000;
+			
+			if (number != number.toFixed(4))
+				number = number.toFixed(4);
+			
+			return number + 'mm'
+		}
+	
+		function convertCoord(coordNode, units) {
+			for (var i = 0; i < coordNode.childNodes.length; i++) {
+				coordNode.removeChild(coordNode.childNodes[i]);
+			}
+
+			var coord = coordNode.getAttribute('value');
+			if (coord != null) {
+				if (units == 'mm') {
+					textNode = document.createTextNode(coordToMM(coord));
+					coordNode.appendChild(textNode);
+				} else if (units == 'mil') {
+					textNode = document.createTextNode(coordToMils(coord));		
+					coordNode.appendChild(textNode);	
+				}
+			}
+		}
+	
+		function convertUnits(unitNode, units) {
+			for (var i = 0; i < unitNode.childNodes.length; i++) {
+				unitNode.removeChild(unitNode.childNodes[i]);		
+			}
+		
+			textNode = document.createTextNode(units); 
+			unitNode.appendChild(textNode);
+		}
+	
+		function changeUnits(radio_input, units) {
+			if (radio_input.checked) {
+			
+				var elements = document.getElementsByName('coordinate');
+				if (elements) {
+					for (var i = 0; i < elements.length; i++) {
+						convertCoord(elements[i], units);
+					}
+				}
+	
+				var elements = document.getElementsByName('units');
+				if (elements) {
+					for (var i = 0; i < elements.length; i++) {
+						convertUnits(elements[i], units);
+					}
+				}
+			}
+		}
+	</script><title>Design Rule Verification Report</title>
+</head>
+<body onload=""><img ALT="Altium" src="
+			file://C:\Users\Public\Documents\Altium\AD 10\Templates\AD-rgb_logo_223x64.gif
+		"><a href="dxpprocess://Client:SetupPreferences?Server=PCB|PageName=Reports" class="customize"><acronym title="dxpprocess://Client:SetupPreferences?Server=PCB|PageName=Reports">customize</acronym></a><h1>Design Rule Verification Report</h1>
+<table class="header_holder">
+<td Style="width:70%">
+<table class="front_matter">
+<tr class="front_matter">
+<td class="front_matter_column1">Date</td>
+<td class="front_matter_column2">:</td>
+<td class="front_matter_column3">28.08.2024</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Time</td>
+<td class="front_matter_column2">:</td>
+<td class="front_matter_column3">13:40:22</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Elapsed Time</td>
+<td class="front_matter_column2">:</td>
+<td class="front_matter_column3">00:00:00</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Filename</td>
+<td class="front_matter_column2">:</td>
+<td class="front_matter_column3"><a href="file:///C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc" class="file"><acronym title="C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc">C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc</acronym></a></td>
+</tr>
+</table>
+</td>
+<td Style="Width:30%">
+<table class="DRC_summary_header">
+<tr>
+<td class="DRC_summary_header_col1">Warnings</td>
+<td class="DRC_summary_header_col2">:</td>
+<td class="DRC_summary_header_col3">0</td></tr>
+<tr>
+<td class="DRC_summary_header_col1">Rule Violations</td>
+<td class="DRC_summary_header_col2">:</td>
+<td class="DRC_summary_header_col3" style="color : red">79</td></tr>
+</table>
+</td>
+</table>
+<hr><a name="IDE0NFO1DQA1RKCRJV1TDMBLQXDNVIT40SJ5NXLONOAFSIS0NMFZCH"><h2>Summary</h2></a><table>
+<tr>
+<th class="column1">Warnings</th>
+<th class="column2">Count</th>
+</tr>
+<tr>
+<td style="font-weight : bold; text-align : right" class="column1">Total</td>
+<td style="font-weight : bold" class="column2">0</td>
+</tr>
+</table><br><table>
+<tr>
+<th class="column1">Rule Violations</th>
+<th class="column2">Count</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDZ3DUZVKZZXVDOQGYINZIXXT3QL0DNWLYTMJEYIMIZIJHKBZRUINF">Net Antennae (Tolerance=0mm) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDFIT1KEWIMKGOJYYHQV0BAQ4FSPIOTK0L2F4CTPBFTZM3X21ISHXB">Silk to Silk (Clearance=0.05mm) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDLEXWFE3IEXK5M15EOCQVDDAIH25LM4JH1L2AVJ4BEKP3O4LJRIL">Silkscreen Over Component Pads (Clearance=0.05mm) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDCPBDLM0WXAX1EPOTHPONCTAMFKOMYEVQLFVD3NFV1ZYIQEX5OE0O">Minimum Solder Mask Sliver (Gap=0.1mm) (All),(All)</a></td>
+<td class="column2">22</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDISDX2Q2YDLFIFMV0FBX4NZVAPEOOVGGBX0CUWMPBPVRQJ04OO2IK">Hole To Hole Clearance (Gap=0.05mm) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#ID5R1A1K15AADDD4FYREUHQCJEEYQONBOHR2J0DDKYZQMT5IDLDCC">Hole Size Constraint (Min=0.025mm) (Max=2.54mm) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDTA53NEI53A0OQKFXWF3WC4ZOJR0Y3CIPFRG03AMPN1TME2AQPP">Height Constraint (Min=0mm) (Max=25.4mm) (Prefered=12.7mm) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDR2VAHIWQEKL2VWE4113GU4HHJS0JCLBYSVN01BPQBQWJHIA4F3F">Width Constraint (Min=0.152mm) (Max=2mm) (Preferred=0.4mm) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDVP1CRFAROANHPESZLAHSRRRRZHKYQYOAFF5TJUGULP3LCWV4Y1KN">Power Plane Connect Rule(Relief Connect )(Expansion=0.508mm) (Conductor Width=0.254mm) (Air Gap=0.254mm) (Entries=4) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDUHPELTPIFWY4HYP53DP552AESBYLA3AALFLVZ2ICRBG5WNSQJM0H">Clearance Constraint (Gap=0.1mm) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDRKPVEAPGBWWAMSRR5UB2M5BU1P0RHACVAQZNMZDRLV3JIBV5TUTC">Un-Routed Net Constraint ( (All) )</a></td>
+<td class="column2">57</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDUH01EUV4EMA1IDOCJ4L2DRYEYF0NIH51BIEQOLGEGKF1PKVAVZWM">Short-Circuit Constraint (Allowed=No) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr>
+<td style="font-weight : bold; text-align : right" class="column1">Total</td>
+<td style="font-weight : bold" class="column2">79</td>
+</tr>
+</table><br><hr><a name="IDCPBDLM0WXAX1EPOTHPONCTAMFKOMYEVQLFVD3NFV1ZYIQEX5OE0O"><table>
+<tr>
+<th style="text-align : left" colspan="2" class="rule">Minimum Solder Mask Sliver (Gap=0.1mm) (All),(All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3375.528mil|Location2.X=3444.945mil|Location1.Y=3483.008mil|Location2.Y=3507.149mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3375.528mil|Location2.X=3444.945mil|Location1.Y=3483.008mil|Location2.Y=3507.149mil|Absolute=True">Pad U1-2(86.62mm,88.775mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3375.528mil|Location2.X=3444.945mil|Location1.Y=3508.599mil|Location2.Y=3532.74mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3375.528mil|Location2.X=3444.945mil|Location1.Y=3508.599mil|Location2.Y=3532.74mil|Absolute=True">Pad U1-1(86.62mm,89.425mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3375.528mil|Location2.X=3444.945mil|Location1.Y=3457.417mil|Location2.Y=3481.559mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3375.528mil|Location2.X=3444.945mil|Location1.Y=3457.417mil|Location2.Y=3481.559mil|Absolute=True">Pad U1-3(86.62mm,88.125mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3375.528mil|Location2.X=3444.945mil|Location1.Y=3483.008mil|Location2.Y=3507.149mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3375.528mil|Location2.X=3444.945mil|Location1.Y=3483.008mil|Location2.Y=3507.149mil|Absolute=True">Pad U1-2(86.62mm,88.775mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3375.528mil|Location2.X=3444.945mil|Location1.Y=3431.827mil|Location2.Y=3455.968mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3375.528mil|Location2.X=3444.945mil|Location1.Y=3431.827mil|Location2.Y=3455.968mil|Absolute=True">Pad U1-4(86.62mm,87.475mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3375.528mil|Location2.X=3444.945mil|Location1.Y=3457.417mil|Location2.Y=3481.559mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3375.528mil|Location2.X=3444.945mil|Location1.Y=3457.417mil|Location2.Y=3481.559mil|Absolute=True">Pad U1-3(86.62mm,88.125mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3375.528mil|Location2.X=3444.945mil|Location1.Y=3406.236mil|Location2.Y=3430.378mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3375.528mil|Location2.X=3444.945mil|Location1.Y=3406.236mil|Location2.Y=3430.378mil|Absolute=True">Pad U1-5(86.62mm,86.825mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3375.528mil|Location2.X=3444.945mil|Location1.Y=3431.827mil|Location2.Y=3455.968mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3375.528mil|Location2.X=3444.945mil|Location1.Y=3431.827mil|Location2.Y=3455.968mil|Absolute=True">Pad U1-4(86.62mm,87.475mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3375.528mil|Location2.X=3444.945mil|Location1.Y=3380.646mil|Location2.Y=3404.787mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3375.528mil|Location2.X=3444.945mil|Location1.Y=3380.646mil|Location2.Y=3404.787mil|Absolute=True">Pad U1-6(86.62mm,86.175mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3375.528mil|Location2.X=3444.945mil|Location1.Y=3406.236mil|Location2.Y=3430.378mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3375.528mil|Location2.X=3444.945mil|Location1.Y=3406.236mil|Location2.Y=3430.378mil|Absolute=True">Pad U1-5(86.62mm,86.825mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3375.528mil|Location2.X=3444.945mil|Location1.Y=3355.055mil|Location2.Y=3379.197mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3375.528mil|Location2.X=3444.945mil|Location1.Y=3355.055mil|Location2.Y=3379.197mil|Absolute=True">Pad U1-7(86.62mm,85.525mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3375.528mil|Location2.X=3444.945mil|Location1.Y=3380.646mil|Location2.Y=3404.787mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3375.528mil|Location2.X=3444.945mil|Location1.Y=3380.646mil|Location2.Y=3404.787mil|Absolute=True">Pad U1-6(86.62mm,86.175mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3375.528mil|Location2.X=3444.945mil|Location1.Y=3329.465mil|Location2.Y=3353.606mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3375.528mil|Location2.X=3444.945mil|Location1.Y=3329.465mil|Location2.Y=3353.606mil|Absolute=True">Pad U1-8(86.62mm,84.875mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3375.528mil|Location2.X=3444.945mil|Location1.Y=3355.055mil|Location2.Y=3379.197mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3375.528mil|Location2.X=3444.945mil|Location1.Y=3355.055mil|Location2.Y=3379.197mil|Absolute=True">Pad U1-7(86.62mm,85.525mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3375.528mil|Location2.X=3444.945mil|Location1.Y=3303.874mil|Location2.Y=3328.016mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3375.528mil|Location2.X=3444.945mil|Location1.Y=3303.874mil|Location2.Y=3328.016mil|Absolute=True">Pad U1-9(86.62mm,84.225mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3375.528mil|Location2.X=3444.945mil|Location1.Y=3329.465mil|Location2.Y=3353.606mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3375.528mil|Location2.X=3444.945mil|Location1.Y=3329.465mil|Location2.Y=3353.606mil|Absolute=True">Pad U1-8(86.62mm,84.875mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3375.528mil|Location2.X=3444.945mil|Location1.Y=3278.284mil|Location2.Y=3302.425mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3375.528mil|Location2.X=3444.945mil|Location1.Y=3278.284mil|Location2.Y=3302.425mil|Absolute=True">Pad U1-10(86.62mm,83.575mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3375.528mil|Location2.X=3444.945mil|Location1.Y=3303.874mil|Location2.Y=3328.016mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3375.528mil|Location2.X=3444.945mil|Location1.Y=3303.874mil|Location2.Y=3328.016mil|Absolute=True">Pad U1-9(86.62mm,84.225mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3602.299mil|Location2.X=3671.716mil|Location1.Y=3303.874mil|Location2.Y=3328.016mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3602.299mil|Location2.X=3671.716mil|Location1.Y=3303.874mil|Location2.Y=3328.016mil|Absolute=True">Pad U1-12(92.38mm,84.225mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3602.299mil|Location2.X=3671.716mil|Location1.Y=3278.284mil|Location2.Y=3302.425mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3602.299mil|Location2.X=3671.716mil|Location1.Y=3278.284mil|Location2.Y=3302.425mil|Absolute=True">Pad U1-11(92.38mm,83.575mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3602.299mil|Location2.X=3671.716mil|Location1.Y=3329.465mil|Location2.Y=3353.606mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3602.299mil|Location2.X=3671.716mil|Location1.Y=3329.465mil|Location2.Y=3353.606mil|Absolute=True">Pad U1-13(92.38mm,84.875mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3602.299mil|Location2.X=3671.716mil|Location1.Y=3303.874mil|Location2.Y=3328.016mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3602.299mil|Location2.X=3671.716mil|Location1.Y=3303.874mil|Location2.Y=3328.016mil|Absolute=True">Pad U1-12(92.38mm,84.225mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3602.299mil|Location2.X=3671.716mil|Location1.Y=3355.055mil|Location2.Y=3379.197mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3602.299mil|Location2.X=3671.716mil|Location1.Y=3355.055mil|Location2.Y=3379.197mil|Absolute=True">Pad U1-14(92.38mm,85.525mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3602.299mil|Location2.X=3671.716mil|Location1.Y=3329.465mil|Location2.Y=3353.606mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3602.299mil|Location2.X=3671.716mil|Location1.Y=3329.465mil|Location2.Y=3353.606mil|Absolute=True">Pad U1-13(92.38mm,84.875mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3602.299mil|Location2.X=3671.716mil|Location1.Y=3380.646mil|Location2.Y=3404.787mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3602.299mil|Location2.X=3671.716mil|Location1.Y=3380.646mil|Location2.Y=3404.787mil|Absolute=True">Pad U1-15(92.38mm,86.175mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3602.299mil|Location2.X=3671.716mil|Location1.Y=3355.055mil|Location2.Y=3379.197mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3602.299mil|Location2.X=3671.716mil|Location1.Y=3355.055mil|Location2.Y=3379.197mil|Absolute=True">Pad U1-14(92.38mm,85.525mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3602.299mil|Location2.X=3671.716mil|Location1.Y=3406.236mil|Location2.Y=3430.378mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3602.299mil|Location2.X=3671.716mil|Location1.Y=3406.236mil|Location2.Y=3430.378mil|Absolute=True">Pad U1-16(92.38mm,86.825mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3602.299mil|Location2.X=3671.716mil|Location1.Y=3380.646mil|Location2.Y=3404.787mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3602.299mil|Location2.X=3671.716mil|Location1.Y=3380.646mil|Location2.Y=3404.787mil|Absolute=True">Pad U1-15(92.38mm,86.175mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3602.299mil|Location2.X=3671.716mil|Location1.Y=3431.827mil|Location2.Y=3455.968mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3602.299mil|Location2.X=3671.716mil|Location1.Y=3431.827mil|Location2.Y=3455.968mil|Absolute=True">Pad U1-17(92.38mm,87.475mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3602.299mil|Location2.X=3671.716mil|Location1.Y=3406.236mil|Location2.Y=3430.378mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3602.299mil|Location2.X=3671.716mil|Location1.Y=3406.236mil|Location2.Y=3430.378mil|Absolute=True">Pad U1-16(92.38mm,86.825mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3602.299mil|Location2.X=3671.716mil|Location1.Y=3457.417mil|Location2.Y=3481.559mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3602.299mil|Location2.X=3671.716mil|Location1.Y=3457.417mil|Location2.Y=3481.559mil|Absolute=True">Pad U1-18(92.38mm,88.125mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3602.299mil|Location2.X=3671.716mil|Location1.Y=3431.827mil|Location2.Y=3455.968mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3602.299mil|Location2.X=3671.716mil|Location1.Y=3431.827mil|Location2.Y=3455.968mil|Absolute=True">Pad U1-17(92.38mm,87.475mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3602.299mil|Location2.X=3671.716mil|Location1.Y=3483.008mil|Location2.Y=3507.149mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3602.299mil|Location2.X=3671.716mil|Location1.Y=3483.008mil|Location2.Y=3507.149mil|Absolute=True">Pad U1-19(92.38mm,88.775mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3602.299mil|Location2.X=3671.716mil|Location1.Y=3457.417mil|Location2.Y=3481.559mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3602.299mil|Location2.X=3671.716mil|Location1.Y=3457.417mil|Location2.Y=3481.559mil|Absolute=True">Pad U1-18(92.38mm,88.125mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3602.299mil|Location2.X=3671.716mil|Location1.Y=3508.599mil|Location2.Y=3532.74mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3602.299mil|Location2.X=3671.716mil|Location1.Y=3508.599mil|Location2.Y=3532.74mil|Absolute=True">Pad U1-20(92.38mm,89.425mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3602.299mil|Location2.X=3671.716mil|Location1.Y=3483.008mil|Location2.Y=3507.149mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3602.299mil|Location2.X=3671.716mil|Location1.Y=3483.008mil|Location2.Y=3507.149mil|Absolute=True">Pad U1-19(92.38mm,88.775mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3557.024mil|Location2.X=3580.772mil|Location1.Y=3801.118mil|Location2.Y=3862.268mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3557.024mil|Location2.X=3580.772mil|Location1.Y=3801.118mil|Location2.Y=3862.268mil|Absolute=True">Pad J1-2(90.65mm,97.325mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3582.614mil|Location2.X=3606.362mil|Location1.Y=3801.118mil|Location2.Y=3862.268mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3582.614mil|Location2.X=3606.362mil|Location1.Y=3801.118mil|Location2.Y=3862.268mil|Absolute=True">Pad J1-1(91.3mm,97.325mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3531.433mil|Location2.X=3555.181mil|Location1.Y=3801.118mil|Location2.Y=3862.268mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3531.433mil|Location2.X=3555.181mil|Location1.Y=3801.118mil|Location2.Y=3862.268mil|Absolute=True">Pad J1-3(90mm,97.325mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3557.024mil|Location2.X=3580.772mil|Location1.Y=3801.118mil|Location2.Y=3862.268mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3557.024mil|Location2.X=3580.772mil|Location1.Y=3801.118mil|Location2.Y=3862.268mil|Absolute=True">Pad J1-2(90.65mm,97.325mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3505.843mil|Location2.X=3529.59mil|Location1.Y=3801.118mil|Location2.Y=3862.268mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3505.843mil|Location2.X=3529.59mil|Location1.Y=3801.118mil|Location2.Y=3862.268mil|Absolute=True">Pad J1-4(89.35mm,97.325mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3531.433mil|Location2.X=3555.181mil|Location1.Y=3801.118mil|Location2.Y=3862.268mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3531.433mil|Location2.X=3555.181mil|Location1.Y=3801.118mil|Location2.Y=3862.268mil|Absolute=True">Pad J1-3(90mm,97.325mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3480.252mil|Location2.X=3504mil|Location1.Y=3801.118mil|Location2.Y=3862.268mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3480.252mil|Location2.X=3504mil|Location1.Y=3801.118mil|Location2.Y=3862.268mil|Absolute=True">Pad J1-5(88.7mm,97.325mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3505.843mil|Location2.X=3529.59mil|Location1.Y=3801.118mil|Location2.Y=3862.268mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3505.843mil|Location2.X=3529.59mil|Location1.Y=3801.118mil|Location2.Y=3862.268mil|Absolute=True">Pad J1-4(89.35mm,97.325mm)  Top Layer</acronym></a></td>
+</tr>
+</table></a><a href="#top">Back to top</a><br><br><a name="IDRKPVEAPGBWWAMSRR5UB2M5BU1P0RHACVAQZNMZDRLV3JIBV5TUTC"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Un-Routed Net Constraint ( (All) )</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3106.236mil|Location2.X=3444.945mil|Location1.Y=3457.417mil|Location2.Y=3538.646mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3106.236mil|Location2.X=3444.945mil|Location1.Y=3457.417mil|Location2.Y=3538.646mil|Absolute=True">Un-Routed Net Constraint: Net PD6 Between Pad P1-8 (79.5,89.28mm) And Pad U1-3 (86.62,88.125mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3106.236mil|Location2.X=3444.945mil|Location1.Y=3483.008mil|Location2.Y=3638.646mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3106.236mil|Location2.X=3444.945mil|Location1.Y=3483.008mil|Location2.Y=3638.646mil|Absolute=True">Un-Routed Net Constraint: Net PD5 Between Pad P1-9 (79.5,91.82mm) And Pad U1-2 (86.62,88.775mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3106.236mil|Location2.X=3444.945mil|Location1.Y=3508.599mil|Location2.Y=3738.646mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3106.236mil|Location2.X=3444.945mil|Location1.Y=3508.599mil|Location2.Y=3738.646mil|Absolute=True">Un-Routed Net Constraint: Net PD4 Between Pad P1-10 (79.5,94.36mm) And Pad U1-1 (86.62,89.425mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3602.299mil|Location2.X=3980.378mil|Location1.Y=3508.599mil|Location2.Y=3738.646mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3602.299mil|Location2.X=3980.378mil|Location1.Y=3508.599mil|Location2.Y=3738.646mil|Absolute=True">Un-Routed Net Constraint: Net PD3 Between Pad U1-20 (92.38,89.425mm) And Pad P2-10 (100.5,94.36mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3602.299mil|Location2.X=3980.378mil|Location1.Y=3483.008mil|Location2.Y=3638.646mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3602.299mil|Location2.X=3980.378mil|Location1.Y=3483.008mil|Location2.Y=3638.646mil|Absolute=True">Un-Routed Net Constraint: Net PD2 Between Pad U1-19 (92.38,88.775mm) And Pad P2-9 (100.5,91.82mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3602.299mil|Location2.X=3980.378mil|Location1.Y=3457.417mil|Location2.Y=3538.646mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3602.299mil|Location2.X=3980.378mil|Location1.Y=3457.417mil|Location2.Y=3538.646mil|Absolute=True">Un-Routed Net Constraint: Net PD1 Between Pad U1-18 (92.38,88.125mm) And Pad P2-8 (100.5,89.28mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3580.646mil|Location2.X=3671.716mil|Location1.Y=2594.425mil|Location2.Y=3481.559mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3580.646mil|Location2.X=3671.716mil|Location1.Y=2594.425mil|Location2.Y=3481.559mil|Absolute=True">Un-Routed Net Constraint: Net PD1 Between Pad P3-2 (91.55,66.5mm) And Pad U1-18 (92.38,88.125mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3602.299mil|Location2.X=3980.378mil|Location1.Y=3391.276mil|Location2.Y=3455.968mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3602.299mil|Location2.X=3980.378mil|Location1.Y=3391.276mil|Location2.Y=3455.968mil|Absolute=True">Un-Routed Net Constraint: Net PC7 Between Pad U1-17 (92.38,87.475mm) And Pad P2-7 (100.5,86.74mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3602.299mil|Location2.X=3980.378mil|Location1.Y=3291.276mil|Location2.Y=3430.378mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3602.299mil|Location2.X=3980.378mil|Location1.Y=3291.276mil|Location2.Y=3430.378mil|Absolute=True">Un-Routed Net Constraint: Net PC6 Between Pad U1-16 (92.38,86.825mm) And Pad P2-6 (100.5,84.2mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3602.299mil|Location2.X=3980.378mil|Location1.Y=3191.276mil|Location2.Y=3404.787mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3602.299mil|Location2.X=3980.378mil|Location1.Y=3191.276mil|Location2.Y=3404.787mil|Absolute=True">Un-Routed Net Constraint: Net PC5 Between Pad U1-15 (92.38,86.175mm) And Pad P2-5 (100.5,81.66mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3602.299mil|Location2.X=3980.378mil|Location1.Y=3091.276mil|Location2.Y=3379.197mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3602.299mil|Location2.X=3980.378mil|Location1.Y=3091.276mil|Location2.Y=3379.197mil|Absolute=True">Un-Routed Net Constraint: Net PC4 Between Pad U1-14 (92.38,85.525mm) And Pad P2-4 (100.5,79.12mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3602.299mil|Location2.X=3980.378mil|Location1.Y=2991.276mil|Location2.Y=3353.606mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3602.299mil|Location2.X=3980.378mil|Location1.Y=2991.276mil|Location2.Y=3353.606mil|Absolute=True">Un-Routed Net Constraint: Net PC3 Between Pad U1-13 (92.38,84.875mm) And Pad P2-3 (100.5,76.58mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3602.299mil|Location2.X=3980.378mil|Location1.Y=2791.276mil|Location2.Y=3302.425mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3602.299mil|Location2.X=3980.378mil|Location1.Y=2791.276mil|Location2.Y=3302.425mil|Absolute=True">Un-Routed Net Constraint: Net PB5 Between Pad U1-11 (92.38,83.575mm) And Pad P2-1 (100.5,71.5mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3602.299mil|Location2.X=5657.532mil|Location1.Y=3278.284mil|Location2.Y=3670.331mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3602.299mil|Location2.X=5657.532mil|Location1.Y=3278.284mil|Location2.Y=3670.331mil|Absolute=True">Un-Routed Net Constraint: Net PB5 Between Pad U1-11 (92.38,83.575mm) And Pad L3-L_2 (143.3,92.5mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3602.299mil|Location2.X=3980.378mil|Location1.Y=2891.276mil|Location2.Y=3328.016mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3602.299mil|Location2.X=3980.378mil|Location1.Y=2891.276mil|Location2.Y=3328.016mil|Absolute=True">Un-Routed Net Constraint: Net PB4 Between Pad U1-12 (92.38,84.225mm) And Pad P2-2 (100.5,74.04mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3106.236mil|Location2.X=3444.945mil|Location1.Y=2791.276mil|Location2.Y=3302.425mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3106.236mil|Location2.X=3444.945mil|Location1.Y=2791.276mil|Location2.Y=3302.425mil|Absolute=True">Un-Routed Net Constraint: Net PA3 Between Pad P1-1 (79.5,71.5mm) And Pad U1-10 (86.62,83.575mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3106.236mil|Location2.X=3444.945mil|Location1.Y=3191.276mil|Location2.Y=3404.787mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3106.236mil|Location2.X=3444.945mil|Location1.Y=3191.276mil|Location2.Y=3404.787mil|Absolute=True">Un-Routed Net Constraint: Net PA2 Between Pad P1-5 (79.5,81.66mm) And Pad U1-6 (86.62,86.175mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3106.236mil|Location2.X=3444.945mil|Location1.Y=3291.276mil|Location2.Y=3430.378mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3106.236mil|Location2.X=3444.945mil|Location1.Y=3291.276mil|Location2.Y=3430.378mil|Absolute=True">Un-Routed Net Constraint: Net PA1 Between Pad P1-6 (79.5,84.2mm) And Pad U1-5 (86.62,86.825mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3106.236mil|Location2.X=3444.945mil|Location1.Y=3391.276mil|Location2.Y=3455.968mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3106.236mil|Location2.X=3444.945mil|Location1.Y=3391.276mil|Location2.Y=3455.968mil|Absolute=True">Un-Routed Net Constraint: Net NRST Between Pad P1-7 (79.5,86.74mm) And Pad U1-4 (86.62,87.475mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3375.528mil|Location2.X=3444.945mil|Location1.Y=2594.425mil|Location2.Y=3455.968mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3375.528mil|Location2.X=3444.945mil|Location1.Y=2594.425mil|Location2.Y=3455.968mil|Absolute=True">Un-Routed Net Constraint: Net NRST Between Pad P3-4 (86.38,66.5mm) And Pad U1-4 (86.62,87.475mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3375.528mil|Location2.X=4925.25mil|Location1.Y=3431.827mil|Location2.Y=3645.725mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3375.528mil|Location2.X=4925.25mil|Location1.Y=3431.827mil|Location2.Y=3645.725mil|Absolute=True">Un-Routed Net Constraint: Net NRST Between Pad U1-4 (86.62,87.475mm) And Pad B1-1 (124.5,92mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3440.882mil|Location2.X=3638.252mil|Location1.Y=3611.157mil|Location2.Y=3687.071mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3440.882mil|Location2.X=3638.252mil|Location1.Y=3611.157mil|Location2.Y=3687.071mil|Absolute=True">Un-Routed Net Constraint: Net VCC Between Pad C2-2 (87.95,92.75mm) And Pad U2-3 (91.655,92.29mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3578.677mil|Location2.X=3638.252mil|Location1.Y=3611.157mil|Location2.Y=3862.268mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3578.677mil|Location2.X=3638.252mil|Location1.Y=3611.157mil|Location2.Y=3862.268mil|Absolute=True">Un-Routed Net Constraint: Net VCC Between Pad J1-1 (91.3,97.325mm) And Pad U2-3 (91.655,92.29mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3336.551mil|Location2.X=3484.315mil|Location1.Y=3497.969mil|Location2.Y=3687.071mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3336.551mil|Location2.X=3484.315mil|Location1.Y=3497.969mil|Location2.Y=3687.071mil|Absolute=True">Un-Routed Net Constraint: Net VCC Between Pad C1-2 (85.3,89.75mm) And Pad C2-2 (87.95,92.75mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3106.236mil|Location2.X=3444.945mil|Location1.Y=2991.276mil|Location2.Y=3353.606mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3106.236mil|Location2.X=3444.945mil|Location1.Y=2991.276mil|Location2.Y=3353.606mil|Absolute=True">Un-Routed Net Constraint: Net VCAP Between Pad P1-3 (79.5,76.58mm) And Pad U1-8 (86.62,84.875mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3375.528mil|Location2.X=8273.668mil|Location1.Y=3329.465mil|Location2.Y=3657.536mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3375.528mil|Location2.X=8273.668mil|Location1.Y=3329.465mil|Location2.Y=3657.536mil|Absolute=True">Un-Routed Net Constraint: Net VCAP Between Pad U1-8 (86.62,84.875mm) And Pad C6-1 (209.6,92mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5555.044mil|Location2.X=6977.411mil|Location1.Y=3578.67mil|Location2.Y=3670.331mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5555.044mil|Location2.X=6977.411mil|Location1.Y=3578.67mil|Location2.Y=3670.331mil|Absolute=True">Un-Routed Net Constraint: Net NetL3_L_1 Between Pad L3-L_1 (141.5,92.5mm) And Pad R2-1 (176.5,92mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5377.879mil|Location2.X=6721.506mil|Location1.Y=3578.67mil|Location2.Y=3670.331mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5377.879mil|Location2.X=6721.506mil|Location1.Y=3578.67mil|Location2.Y=3670.331mil|Absolute=True">Un-Routed Net Constraint: Net NetL2_L_1 Between Pad L2-L_1 (137,92.5mm) And Pad R1-1 (170,92mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4749.928mil|Location2.X=5166.391mil|Location1.Y=3578.67mil|Location2.Y=3665.41mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4749.928mil|Location2.X=5166.391mil|Location1.Y=3578.67mil|Location2.Y=3665.41mil|Absolute=True">Un-Routed Net Constraint: Net NetC7_2 Between Pad C7-2 (121.2,92mm) And Pad R3-1 (130.5,92mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3381.827mil|Location2.X=3504mil|Location1.Y=3801.118mil|Location2.Y=3872.11mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3381.827mil|Location2.X=3504mil|Location1.Y=3801.118mil|Location2.Y=3872.11mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad J1-SH2 (86.8,97.55mm) And Pad J1-5 (88.7,97.325mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3375.921mil|Location2.X=3537.465mil|Location1.Y=3895.606mil|Location2.Y=3978.409mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3375.921mil|Location2.X=3537.465mil|Location1.Y=3895.606mil|Location2.Y=3978.409mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad J1-SH3 (86.575,100mm) And Pad J1-SH4 (88.8,100mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3549.15mil|Location2.X=3710.693mil|Location1.Y=3895.606mil|Location2.Y=3978.409mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3549.15mil|Location2.X=3710.693mil|Location1.Y=3895.606mil|Location2.Y=3978.409mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad J1-SH5 (91.2,100mm) And Pad J1-SH6 (93.425,100mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3633.795mil|Location2.X=3710.693mil|Location1.Y=3808.992mil|Location2.Y=3966.598mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3633.795mil|Location2.X=3710.693mil|Location1.Y=3808.992mil|Location2.Y=3966.598mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad J1-SH1 (93.2,97.55mm) And Pad J1-SH6 (93.425,100mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5121.972mil|Location2.X=5299.262mil|Location1.Y=3153.473mil|Location2.Y=3224.465mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5121.972mil|Location2.X=5299.262mil|Location1.Y=3153.473mil|Location2.Y=3224.465mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad C3-1 (130.65,81mm) And Pad C4-2 (134.05,81mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3375.528mil|Location2.X=3482.346mil|Location1.Y=3355.055mil|Location2.Y=3568.961mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3375.528mil|Location2.X=3482.346mil|Location1.Y=3355.055mil|Location2.Y=3568.961mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad U1-7 (86.62,85.525mm) And Pad C1-1 (87.9,89.75mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3338.52mil|Location2.X=3482.346mil|Location1.Y=3497.969mil|Location2.Y=3687.071mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3338.52mil|Location2.X=3482.346mil|Location1.Y=3497.969mil|Location2.Y=3687.071mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad C2-1 (85.35,92.75mm) And Pad C1-1 (87.9,89.75mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3438.913mil|Location2.X=3638.252mil|Location1.Y=3430.843mil|Location2.Y=3568.961mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3438.913mil|Location2.X=3638.252mil|Location1.Y=3430.843mil|Location2.Y=3568.961mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad C1-1 (87.9,89.75mm) And Pad U2-1 (91.655,87.71mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4647.565mil|Location2.X=5023.675mil|Location1.Y=3586.544mil|Location2.Y=3657.536mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4647.565mil|Location2.X=5023.675mil|Location1.Y=3586.544mil|Location2.Y=3657.536mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad C7-1 (118.6,92mm) And Pad B1-2 (127,92mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4976.305mil|Location2.X=5480.367mil|Location1.Y=3598.355mil|Location2.Y=3670.331mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4976.305mil|Location2.X=5480.367mil|Location1.Y=3598.355mil|Location2.Y=3670.331mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad B1-2 (127,92mm) And Pad L2-L_2 (138.8,92.5mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3106.236mil|Location2.X=3444.945mil|Location1.Y=3091.276mil|Location2.Y=3379.197mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3106.236mil|Location2.X=3444.945mil|Location1.Y=3091.276mil|Location2.Y=3379.197mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad P1-4 (79.5,79.12mm) And Pad U1-7 (86.62,85.525mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3375.528mil|Location2.X=3524.472mil|Location1.Y=2594.425mil|Location2.Y=3379.197mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3375.528mil|Location2.X=3524.472mil|Location1.Y=2594.425mil|Location2.Y=3379.197mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad U1-7 (86.62,85.525mm) And Pad P3-3 (88.92,66.5mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=7186.931mil|Location2.X=8376.031mil|Location1.Y=3586.544mil|Location2.Y=3657.536mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=7186.931mil|Location2.X=8376.031mil|Location1.Y=3586.544mil|Location2.Y=3657.536mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad C5-1 (183.1,92mm) And Pad C6-2 (212.2,92mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3454.662mil|Location2.X=3631.953mil|Location1.Y=3895.606mil|Location2.Y=3978.409mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3454.662mil|Location2.X=3631.953mil|Location1.Y=3895.606mil|Location2.Y=3978.409mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad J1-SH4 (88.8,100mm) And Pad J1-SH5 (91.2,100mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3375.921mil|Location2.X=3452.819mil|Location1.Y=3808.992mil|Location2.Y=3966.598mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3375.921mil|Location2.X=3452.819mil|Location1.Y=3808.992mil|Location2.Y=3966.598mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad J1-SH3 (86.575,100mm) And Pad J1-SH2 (86.8,97.55mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3338.52mil|Location2.X=3452.819mil|Location1.Y=3616.079mil|Location2.Y=3872.11mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3338.52mil|Location2.X=3452.819mil|Location1.Y=3616.079mil|Location2.Y=3872.11mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad C2-1 (85.35,92.75mm) And Pad J1-SH2 (86.8,97.55mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4976.305mil|Location2.X=5165.405mil|Location1.Y=3153.473mil|Location2.Y=3645.725mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4976.305mil|Location2.X=5165.405mil|Location1.Y=3153.473mil|Location2.Y=3645.725mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad B1-2 (127,92mm) And Pad C3-1 (130.65,81mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5448.745mil|Location2.X=7230.364mil|Location1.Y=3586.544mil|Location2.Y=3670.331mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5448.745mil|Location2.X=7230.364mil|Location1.Y=3586.544mil|Location2.Y=3670.331mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad L2-L_2 (138.8,92.5mm) And Pad C5-1 (183.1,92mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3633.795mil|Location2.X=4690.998mil|Location1.Y=3586.544mil|Location2.Y=3872.11mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3633.795mil|Location2.X=4690.998mil|Location1.Y=3586.544mil|Location2.Y=3872.11mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad J1-SH1 (93.2,97.55mm) And Pad C7-1 (118.6,92mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=7050.12mil|Location2.X=7332.726mil|Location1.Y=3578.67mil|Location2.Y=3665.41mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=7050.12mil|Location2.X=7332.726mil|Location1.Y=3578.67mil|Location2.Y=3665.41mil|Absolute=True">Un-Routed Net Constraint: Net 3V3 Between Pad R2-2 (179.8,92mm) And Pad C5-2 (185.7,92mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6794.215mil|Location2.X=7107.333mil|Location1.Y=3578.67mil|Location2.Y=3665.41mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=6794.215mil|Location2.X=7107.333mil|Location1.Y=3578.67mil|Location2.Y=3665.41mil|Absolute=True">Un-Routed Net Constraint: Net 3V3 Between Pad R1-2 (173.3,92mm) And Pad R2-2 (179.8,92mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5019.609mil|Location2.X=5401.625mil|Location1.Y=3153.473mil|Location2.Y=3224.465mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5019.609mil|Location2.X=5401.625mil|Location1.Y=3153.473mil|Location2.Y=3224.465mil|Absolute=True">Un-Routed Net Constraint: Net 3V3 Between Pad C3-2 (128.05,81mm) And Pad C4-1 (136.65,81mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3375.528mil|Location2.X=3638.252mil|Location1.Y=3303.874mil|Location2.Y=3565.614mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3375.528mil|Location2.X=3638.252mil|Location1.Y=3303.874mil|Location2.Y=3565.614mil|Absolute=True">Un-Routed Net Constraint: Net 3V3 Between Pad U1-9 (86.62,84.225mm) And Pad U2-2 (91.655,90mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5239.1mil|Location2.X=5401.625mil|Location1.Y=3153.473mil|Location2.Y=3665.41mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5239.1mil|Location2.X=5401.625mil|Location1.Y=3153.473mil|Location2.Y=3665.41mil|Absolute=True">Un-Routed Net Constraint: Net 3V3 Between Pad R3-2 (133.8,92mm) And Pad C4-1 (136.65,81mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3106.236mil|Location2.X=3444.945mil|Location1.Y=2891.276mil|Location2.Y=3328.016mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3106.236mil|Location2.X=3444.945mil|Location1.Y=2891.276mil|Location2.Y=3328.016mil|Absolute=True">Un-Routed Net Constraint: Net 3V3 Between Pad P1-2 (79.5,74.04mm) And Pad U1-9 (86.62,84.225mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3106.236mil|Location2.X=3724.472mil|Location1.Y=2594.425mil|Location2.Y=2938.646mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3106.236mil|Location2.X=3724.472mil|Location1.Y=2594.425mil|Location2.Y=2938.646mil|Absolute=True">Un-Routed Net Constraint: Net 3V3 Between Pad P1-2 (79.5,74.04mm) And Pad P3-1 (94,66.5mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5239.1mil|Location2.X=6851.428mil|Location1.Y=3578.67mil|Location2.Y=3665.41mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5239.1mil|Location2.X=6851.428mil|Location1.Y=3578.67mil|Location2.Y=3665.41mil|Absolute=True">Un-Routed Net Constraint: Net 3V3 Between Pad R3-2 (133.8,92mm) And Pad R1-2 (173.3,92mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3578.677mil|Location2.X=5296.313mil|Location1.Y=3521mil|Location2.Y=3665.41mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\oguzhan.yilmaz\Documents\Altium Workspace\Ultrasonik\STM8_DevBoard.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3578.677mil|Location2.X=5296.313mil|Location1.Y=3521mil|Location2.Y=3665.41mil|Absolute=True">Un-Routed Net Constraint: Net 3V3 Between Pad U2-2 (91.655,90mm) And Pad R3-2 (133.8,92mm)</acronym></a><br></td>
+</tr>
+</table></a><a href="#top">Back to top</a><br><br></body>
+</html>

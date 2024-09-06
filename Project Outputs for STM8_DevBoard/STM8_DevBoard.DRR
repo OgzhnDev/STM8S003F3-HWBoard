@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+NCDrill File Report For: STM8_DevBoard.PcbDoc   20.08.2024  14:39:28
+---------------------------------------------------------------------------
+
+Layer Pair : Top Layer to Bottom Layer
+ASCII RoundHoles File : STM8_DevBoard.TXT
+EIA File   : STM8_DevBoard.DRL
+
+Tool         Hole Size           Hole Type     Hole Count Plated       Tool Travel
+---------------------------------------------------------------------------
+T1        0.5mm (19.685mil)        Round          10               91.79 mm (3.61 Inch)
+T2        0.7mm (27.559mil)        Round          2                2.50 mm (0.10 Inch)
+T3        1mm (39.37mil)           Round          24               130.31 mm (5.13 Inch)
+---------------------------------------------------------------------------
+Totals                                            36               224.60 mm (8.84 Inch)
+
+Total Processing Time (hh:mm:ss) : 00:00:00
